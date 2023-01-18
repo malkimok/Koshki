@@ -55,7 +55,7 @@ int main(int argc, const char * argv[]){
     UserInput userInput(mainScene->getWindowsList()[0]);
     Shader::createShader(vShader, fShader);
     
-    // gitTest
+    //  gitTest
     // REMOVE LATER
     Material catMat = Material(1.0f, 4);
     Model cat = Model();
