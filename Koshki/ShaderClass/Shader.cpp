@@ -103,21 +103,23 @@ void Shader::clearShader(){
     uniformProjection = 0;
 }
 
-void Shader::setLights(vector<Light*> lights, unsigned int lightCount){
+void Shader::setLights(map<string, Light*> lights, unsigned int lightCount){
     if(lightCount > MAX_LIGHTS){
         lightCount = MAX_LIGHTS;
     }
     glUniform1i(uniformLightCount, lightCount);
-    for (size_t i = 0; i < lightCount; i++){
-            lights[i]->useLight(uniformLights[i].uniformAmbientIntensity,
-                               uniformLights[i].uniformColour,
-                               uniformLights[i].uniformDiffuseIntensity,
-                               uniformLights[i].uniformPosition,
-                               uniformLights[i].uniformDirection,
-                               uniformLights[i].uniformConstant,
-                               uniformLights[i].uniformLinear,
-                               uniformLights[i].uniformExponent,
-                               uniformLights[i].uniformEdge);
+    size_t i = 0;
+    for (const auto& [name, light] : lights) {
+        light->useLight(uniformLights[i].uniformAmbientIntensity,
+                            uniformLights[i].uniformColour,
+                            uniformLights[i].uniformDiffuseIntensity,
+                            uniformLights[i].uniformPosition,
+                            uniformLights[i].uniformDirection,
+                            uniformLights[i].uniformConstant,
+                            uniformLights[i].uniformLinear,
+                            uniformLights[i].uniformExponent,
+                            uniformLights[i].uniformEdge);
+        i++;
     }
 }
 

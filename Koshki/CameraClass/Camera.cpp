@@ -3,7 +3,7 @@
 Camera::Camera(){
 }
 
-Camera::Camera(glm::vec3 cameraPosition, glm::vec3 cameraUp, GLfloat cameraYaw, GLfloat cameraPitch, GLfloat cameraMoveSpeed, GLfloat cameraTurnSpeed){
+Camera::Camera(glm::vec3 cameraPosition, glm::vec3 cameraUp, GLfloat cameraYaw, GLfloat cameraPitch, GLfloat cameraMoveSpeed, GLfloat cameraTurnSpeed, string cameraName){
     
     position = cameraPosition;
     worldUp = cameraUp;
@@ -12,6 +12,7 @@ Camera::Camera(glm::vec3 cameraPosition, glm::vec3 cameraUp, GLfloat cameraYaw, 
     movementSpeed = cameraMoveSpeed;
     turnSpeed = cameraTurnSpeed;
     front = glm::vec3(0.0f, 0.0f, -1.0f);
+    name = cameraName;
     
     update();
 }
@@ -28,20 +29,4 @@ void Camera::update(){
 
 glm::mat4 Camera::calculateViewMatrix(){
     return glm::lookAt(position, position + front, worldUp);
-}
-
-void Camera::keyControl(bool* keys, GLfloat deltaTime){
-    GLfloat deltaSpeed = movementSpeed * deltaTime;
-    if(keys[GLFW_KEY_W]){
-        position += front * deltaSpeed;
-    }
-    else if(keys[GLFW_KEY_S]){
-        position -= front * deltaSpeed;
-    }
-    if(keys[GLFW_KEY_D]){
-        position -= right * deltaSpeed;
-    }
-    if(keys[GLFW_KEY_A]){
-        position += right * deltaSpeed;
-    }
 }

@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <vector>
+#include <map>
 
 #include "Light.hpp"
 
@@ -32,7 +32,7 @@ public:
     static void createShader(const char* vShader, const char* fShader);
     void clearShader();
     void assignUniforms();
-    void setLights(vector<Light*> lights, unsigned int lightCount);
+    void setLights(map<string, Light*> lights, unsigned int lightCount);
     ~Shader();
     
     // getLocation

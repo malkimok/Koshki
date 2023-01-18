@@ -5,9 +5,9 @@
 
 class Controller{
 public:
-    static void cameraKeyControl(Scene* scene, int windowNumber, int cameraNumber);
-    static void cameraMouseControl(Scene* scene, int windowNumber, int cameraNumber);
-    static void cameraControl(Scene* scene, int windowNumber, int cameraNumber);
+    static void cameraKeyControl(Scene* scene, string windowName, string cameraName);
+    static void cameraMouseControl(Scene* scene, string windowName, string cameraName);
+    static void cameraControl(Scene* scene, string windowName, string cameraName);
 private:
     
 };

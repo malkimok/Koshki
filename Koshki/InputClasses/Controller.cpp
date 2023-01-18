@@ -1,9 +1,9 @@
 #include "Controller.hpp"
 #include "DeltaTime.hpp"
 
-void Controller::cameraKeyControl(Scene* scene, int windowNumber, int cameraNumber){
-    Camera* camera = scene->getCamerasList()[cameraNumber];
-    bool* keys = scene->getWindowsList()[windowNumber]->getKeys();
+void Controller::cameraKeyControl(Scene* scene, string windowName, string cameraName){
+    Camera* camera = scene->getCamerasMap()[cameraName];
+    bool* keys = scene->getWindowsMap()[windowName]->getKeys();
     GLfloat deltaSpeed = camera->getMovementSpeed() * DeltaTime::getDeltaTime();
     if(keys[GLFW_KEY_W]){
         camera->addCameraPosition(camera->getCameraDirection() * deltaSpeed);
@@ -19,10 +19,10 @@ void Controller::cameraKeyControl(Scene* scene, int windowNumber, int cameraNumb
     }
 }
 
-void Controller::cameraMouseControl(Scene* scene, int windowNumber, int cameraNumber){
-    Camera* camera = scene->getCamerasList()[cameraNumber];
-    float xChange = scene->getWindowsList()[windowNumber]->getXChange();
-    float yChange = scene->getWindowsList()[windowNumber]->getYChange();
+void Controller::cameraMouseControl(Scene* scene, string windowName, string cameraName){
+    Camera* camera = scene->getCamerasMap()[cameraName];
+    float xChange = scene->getWindowsMap()[windowName]->getXChange();
+    float yChange = scene->getWindowsMap()[windowName]->getYChange();
     xChange *= camera->getTurnSpeed();
     yChange *= camera->getTurnSpeed();
     
@@ -39,7 +39,7 @@ void Controller::cameraMouseControl(Scene* scene, int windowNumber, int cameraNu
     }
 }
 
-void Controller::cameraControl(Scene* scene, int windowNumber, int cameraNumber){
-    cameraKeyControl(scene, windowNumber, cameraNumber);
-    cameraMouseControl(scene, windowNumber, cameraNumber);
+void Controller::cameraControl(Scene* scene, string windowName, string cameraName){
+    cameraKeyControl(scene, windowName, cameraName);
+    cameraMouseControl(scene, windowName, cameraName);
 }

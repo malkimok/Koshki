@@ -14,7 +14,8 @@ Light::Light(GLfloat red, GLfloat green, GLfloat blue,
              GLfloat xPos, GLfloat yPos, GLfloat zPos,
              GLfloat xDir, GLfloat yDir, GLfloat zDir,
              GLfloat con, GLfloat lin, GLfloat exp,
-             GLfloat edg){
+             GLfloat edg,
+             std::string lName){
     colour = glm::vec3(red, green, blue);
     ambientIntensity = aIntensity;
     diffuseIntensity = dIntensity;
@@ -27,6 +28,7 @@ Light::Light(GLfloat red, GLfloat green, GLfloat blue,
     direction = glm::normalize(glm::vec3(xDir, yDir, zDir));
     edge = edg;
     procEdge = cosf(glm::radians(edge));
+    name = lName;
 }
 
 void Light::useLight(GLuint ambientIntensityLocation, GLuint ambientColourLocation,

@@ -15,7 +15,7 @@
 
 class Window{
 public:
-    Window(int width, int height);
+    Window(int width, int height, string wName);
     int Init();
     
     void setKey(int key, bool state){keys[key] = state;}
@@ -30,6 +30,7 @@ public:
     GLFWwindow* getWindowPointer(){return window;}
     int getWidth(){return width;}
     int getHeight(){return height;}
+    string getName(){return name;}
     
     // get user input
     bool* getKeys(){return keys;}
@@ -44,6 +45,7 @@ public:
     ~Window();
 private:
     GLFWwindow* window;
+    string name;
     int width, height;
     
     // user input variables

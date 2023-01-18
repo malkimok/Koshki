@@ -47,15 +47,15 @@ GLuint uniformModel, uniformProjection, uniformView,
 
 int main(int argc, const char * argv[]){
     Scene* mainScene = new Scene();
-    mainScene->createWindow(1080, 1024);
+    mainScene->createWindow(1080, 1024, "MainWindow");
     mainScene->createCamera(glm::vec3(0.0f, 0.0f, 0.0f),
                             glm::vec3(0.0f, -1.0f, 0.0f),
                             0.0f, 0.0f,
-                            3.0f, 0.5f);
-    UserInput userInput(mainScene->getWindowsList()[0]);
+                            3.0f, 0.5f,
+                            "MainCamera");
+    UserInput userInput(mainScene->getWindowsMap()["MainWindow"]);
     Shader::createShader(vShader, fShader);
     
-    //  gitTest
     // REMOVE LATER
     Material catMat = Material(1.0f, 4);
     Model cat = Model();
@@ -64,11 +64,13 @@ int main(int argc, const char * argv[]){
                            0.0f, 0.0f, 0.0f,
                            0.0f, 0.0f, 1.0f,
                            1.0f, 0.1f, 0.1f,
-                           30);
+                           20,
+                           "flashLight");
     cat.loadModel("Models/YellowCat.obj");
     // REMOVE
     
-    while(!glfwWindowShouldClose(mainScene->getWindowsList()[0]->getWindowPointer())){
+    while(!glfwWindowShouldClose(mainScene->getWindowsMap()["MainWindow"]->getWindowPointer())){
+        
         DeltaTime::calculateDeltaTime();
         Handler::shaderList[0]->useShader();
         glfwPollEvents();
@@ -76,20 +78,20 @@ int main(int argc, const char * argv[]){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
         // Camera Control REMOVE LATER
-        mainScene->getCamerasList()[0]->update();
-        Controller::cameraControl(mainScene, 0, 0);
+        mainScene->getCamerasMap()["MainCamera"]->update();
+        Controller::cameraControl(mainScene, "MainWindow", "MainCamera");
     
         // TEST!!!!!! BAD PLACE FOR THIS CODE
-        Handler::shaderList[0]->setLights(mainScene->getLightsList(),
+        Handler::shaderList[0]->setLights(mainScene->getLightsMap(),
                                           mainScene->getLightCount());
-        mainScene->getLightsList()[0]->
-        updatePosition(mainScene->getCamerasList()[0]->getCameraPosition().x,
-                       mainScene->getCamerasList()[0]->getCameraPosition().y + 0.1f,
-                       mainScene->getCamerasList()[0]->getCameraPosition().z);
-        mainScene->getLightsList()[0]->
-        updateDirection(mainScene->getCamerasList()[0]->getCameraDirection().x,
-                        mainScene->getCamerasList()[0]->getCameraDirection().y,
-                        mainScene->getCamerasList()[0]->getCameraDirection().z);
+        mainScene->getLightsMap()["flashLight"]->
+        updatePosition(mainScene->getCamerasMap()["MainCamera"]->getCameraPosition().x,
+                       mainScene->getCamerasMap()["MainCamera"]->getCameraPosition().y + 0.1f,
+                       mainScene->getCamerasMap()["MainCamera"]->getCameraPosition().z);
+        mainScene->getLightsMap()["flashLight"]->
+        updateDirection(mainScene->getCamerasMap()["MainCamera"]->getCameraDirection().x,
+                        mainScene->getCamerasMap()["MainCamera"]->getCameraDirection().y,
+                        mainScene->getCamerasMap()["MainCamera"]->getCameraDirection().z);
         
         uniformSpecularIntensity = Handler::shaderList[0]->getSpecularIntensityLocation();
         uniformShininess = Handler::shaderList[0]->getShininessLocation();
@@ -97,9 +99,9 @@ int main(int argc, const char * argv[]){
         uniformProjection = Handler::shaderList[0]->getProjectionLocation();
         uniformView = Handler::shaderList[0]->getViewLocation();
         glm::mat4 projection = glm::perspective(glm::radians(-60.0f),
-            (GLfloat)mainScene->getWindowsList()[0]->getWidth()/
-            (GLfloat)mainScene->getWindowsList()[0]->getHeight(), 0.1f, 100.0f);
-        glm::mat4 view = mainScene->getCamerasList()[0]->calculateViewMatrix();
+            (GLfloat)mainScene->getWindowsMap()["MainWindow"]->getWidth()/
+            (GLfloat)mainScene->getWindowsMap()["MainWindow"]->getHeight(), 0.1f, 100.0f);
+        glm::mat4 view = mainScene->getCamerasMap()["MainCamera"]->calculateViewMatrix();
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, -0.4f, 0.0f));
         model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.f, 0.f, 0.f));
@@ -113,7 +115,7 @@ int main(int argc, const char * argv[]){
         // TEST
         
         Handler::shaderList[0]->disableShader();
-        glfwSwapBuffers(mainScene->getWindowsList()[0]->getWindowPointer());
+        glfwSwapBuffers(mainScene->getWindowsMap()["MainWindow"]->getWindowPointer());
     }
     return 0;
 }

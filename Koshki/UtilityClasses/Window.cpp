@@ -1,9 +1,10 @@
 #include "Window.hpp"
 
-Window::Window(int inputWidth, int inputHeight){
+Window::Window(int inputWidth, int inputHeight, string wName){
     for(int i = 0; i < sizeof(keys); i++){
         keys[i] = false;
     }
+    name = wName;
     width = inputWidth;
     height = inputHeight;
     this->Init();
@@ -19,7 +20,7 @@ int Window::Init(){
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // removes backward                                                                 // compatibility
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // allows forward compatibility
-    window = glfwCreateWindow(width, height, "Main Window", NULL, NULL);
+    window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
     if (!window){
         printf("Window creation failed");
         glfwTerminate();

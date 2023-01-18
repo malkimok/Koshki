@@ -16,9 +16,8 @@
 
 class Camera{
 public:
-    glm::vec3 position;
     Camera();
-    Camera(glm::vec3 cameraPosition, glm::vec3 cameraUp, GLfloat cameraYaw, GLfloat cameraPitch, GLfloat cameraMoveSpeed, GLfloat cameraTurnSpeed);
+    Camera(glm::vec3 cameraPosition, glm::vec3 cameraUp, GLfloat cameraYaw, GLfloat cameraPitch, GLfloat cameraMoveSpeed, GLfloat cameraTurnSpeed, string cameraName);
     
     glm::mat4 calculateViewMatrix();
     
@@ -37,10 +36,11 @@ public:
     float getPitch(){return pitch;}
     float getMovementSpeed(){return movementSpeed;}
     float getTurnSpeed(){return turnSpeed;}
-    void update();
+    string getName(){return name;}
     
-    void keyControl(bool* keys, GLfloat deltaTime);
+    void update();
 private:
+    glm::vec3 position;
     glm::vec3 front;
     glm::vec3 right;
     glm::vec3 up;
@@ -50,4 +50,5 @@ private:
     GLfloat pitch; // looking up and down
     GLfloat movementSpeed;
     GLfloat turnSpeed;
+    string name;
 };

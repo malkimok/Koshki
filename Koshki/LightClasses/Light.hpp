@@ -1,6 +1,7 @@
 #pragma  once
 
 #include <stdio.h>
+#include <string>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -16,12 +17,14 @@ public:
           GLfloat xPos, GLfloat yPos, GLfloat zPos,
           GLfloat xDir, GLfloat yDir, GLfloat zDir,
           GLfloat con, GLfloat lin, GLfloat exp,
-          GLfloat edg);
+          GLfloat edg,
+          std::string lName);
     void useLight(GLuint ambientIntensityLocation, GLuint ambientColourLocation,
                   GLuint diffuseIntensityLocation, GLuint positionLocation,
                   GLuint directionLocation, GLuint constantLocation,
                   GLuint linearLocation, GLuint exponentLocation,
                   GLuint edgeLocation);
+    std::string getName(){return name;}
     void updateDirection(GLfloat newX, GLfloat newY, GLfloat newZ);
     void updatePosition(GLfloat newX, GLfloat newY, GLfloat newZ);
     ~Light();
@@ -33,6 +36,7 @@ private:
     GLfloat constant, linear, exponent;
     glm::vec3 direction;
     GLfloat edge, procEdge;
+    std::string name;
 };
 
 const int MAX_LIGHTS = 32;
